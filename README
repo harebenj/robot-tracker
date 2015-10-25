@@ -1,0 +1,38 @@
+CALCULATING ROBOT FINAL POSITIONS
+
+To Use:
+    -Ensure Python is installed
+    -No other packages are required
+    -In python shell/test case import robot_positions.RobotPositionCalculationClass
+    -Run RobotPositionCalculationClass().calculate_robot_positions(args)
+        -args must be a list of strings. Anything else is invalid.
+        -First string must be the position data of the upper right corner, ie '5 5'
+        -Strings after this must alternate between:
+            Robot initial position data in the form of 'x_pos y_pos facing' ie '1 3 N'
+                -Facing is one of 'N, E, S, W'
+                -Any other format is invalid
+            and
+            Robot movement in the form of a string of commands
+                -Commands are one of L, R, M
+                    -L means to turn the facing Left
+                    -R means to turn the facing Right
+                    -M means to move forward one square
+                -Any other format is invalid
+        -It is invalid to pass in strings of any other format, or to not pass in part of a robots position/movement
+    -It returns a list of strings representing the final robot positions and facings in the same format as for the
+        initial position data
+
+To Run Tests:
+    -Tests are provided in robot_tests.RobotPositionTestClass
+    -To run all the tests call RobotPositionTestClass().run_tests()
+    -More test cases can be added to this class and will be picked up automatically
+
+Description of methods inside RobotPositionCalculationClass():
+
+After checking that the passed in args are valid, I initialize the class by setting up the initial x and y maxes,
+as well as initializing a list of hashes which each fully describe a robot in terms of its id, facing and movement.
+Each robot is then moved using its movement string in order. The calculate_robot_position() function makes use of
+there being 4 cardinal directions to adjust the facing for each of the L and R commands. Then for each M command,
+using the facing the potential destination is calculated, and I check that that position is possible. If the position
+is off the edge of the rectangle, or is currently occupied by a robot then it will stop where it is until a command
+is received that causes it to move to a possible square.
